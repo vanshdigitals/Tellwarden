@@ -58,6 +58,7 @@ secrets.toml
 node_modules/
 dist/
 dist-ssr/
+frontend/dist/
 
 # Playwright & test reports
 test-results/

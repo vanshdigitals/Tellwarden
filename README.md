@@ -3,7 +3,7 @@
 Educational cybersecurity web application: Web Security Scanner & Offline Rule-Based IDS Simulator.
 
 - **Status:** Active development prototype. Implements modular security scanning tools, an offline rule-based IDS simulator, a responsive Streamlit interface with a custom right-side drawer shell, an alternative FastAPI backend and React frontend prototype, sample datasets, and automated test suites.
-- **Name status:** `Tellwarden` is a **provisional name, pending clearance**. Domain (.com, .in) and Indian trademark checks are **not done**. The name is not claimed to be legally available or unique. See `RESEARCH_AND_NAMING.md`.
+- **Name status:** `Tellwarden` is a **provisional name, pending clearance**. Domain (.com, .in) and Indian trademark checks are **not done**. The name is not claimed to be legally available or unique. See [`docs/RESEARCH_AND_NAMING.md`](docs/RESEARCH_AND_NAMING.md).
 - **Last updated:** 26 October 2026
 
 ## What it is
@@ -23,7 +23,7 @@ Educational cybersecurity web application: Web Security Scanner & Offline Rule-B
 
 ## Technology Stack
 
-- **Core & Backend:** Python 3.10+, FastAPI, httpx, PyYAML, Jinja2, pandas, pydantic.
+- **Core & Backend:** Python 3.10+, FastAPI, httpx, PyYAML, pandas, pydantic.
 - **Streamlit Application:** Streamlit 1.66+, custom Streamlit Components v2 responsive shell, self-hosted typography.
 - **Frontend Prototype:** React, TypeScript, Vite, TailwindCSS (for standalone SPA prototype).
 - **Typography:** Self-hosted **DM Sans** (headings and interface) and **IBM Plex Mono** (technical values).
@@ -39,16 +39,16 @@ Educational cybersecurity web application: Web Security Scanner & Offline Rule-B
 | File | Purpose |
 |---|---|
 | `README.md` | This overview and index |
-| `RESEARCH_AND_NAMING.md` | Name candidates, evidence, scoring, what could not be verified |
-| `PRD.md` | Product requirements with IDs and acceptance criteria |
-| `TRD.md` | Architecture, data flow, schemas, SSRF-safe design, diagrams |
-| `DESIGN_SYSTEM.md` | Palette, typography, layout and component rules |
-| `SECURITY_AND_ETHICS.md` | Authorised-use policy, scanner safety controls, privacy, limits |
-| `TEST_PLAN.md` | Test cases mapped to requirements |
-| `IMPLEMENTATION_PLAN.md` | Phased build plan and definition of done |
-| `PROJECT_STRUCTURE.md` | Planned folder and file tree with the purpose of each file |
-| `DECISIONS_AND_ASSUMPTIONS.md` | Decisions, assumptions, open questions, approval checklist |
-| `REFERENCES.md` | Sources, access dates and the claims each supports |
+| [`docs/RESEARCH_AND_NAMING.md`](docs/RESEARCH_AND_NAMING.md) | Name candidates, evidence, scoring, what could not be verified |
+| [`docs/PRD.md`](docs/PRD.md) | Product requirements with IDs and acceptance criteria |
+| [`docs/TRD.md`](docs/TRD.md) | Architecture, data flow, schemas, SSRF-safe design, diagrams |
+| [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) | Palette, typography, layout and component rules |
+| [`docs/SECURITY_AND_ETHICS.md`](docs/SECURITY_AND_ETHICS.md) | Authorised-use policy, scanner safety controls, privacy, limits |
+| [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md) | Test cases mapped to requirements |
+| [`docs/IMPLEMENTATION_PLAN.md`](docs/IMPLEMENTATION_PLAN.md) | Phased build plan and definition of done |
+| [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md) | Planned folder and file tree with the purpose of each file |
+| [`docs/DECISIONS_AND_ASSUMPTIONS.md`](docs/DECISIONS_AND_ASSUMPTIONS.md) | Decisions, assumptions, open questions, approval checklist |
+| [`docs/REFERENCES.md`](docs/REFERENCES.md) | Sources, access dates and the claims each supports |
 
 ## Evidence tags used across the documents
 

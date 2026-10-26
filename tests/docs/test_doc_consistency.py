@@ -30,15 +30,15 @@ ALLOWED_HEX = {
 
 MARKDOWN_DOCS = [
     "README.md",
-    "PRD.md",
-    "TRD.md",
-    "DESIGN_SYSTEM.md",
-    "SECURITY_AND_ETHICS.md",
-    "TEST_PLAN.md",
-    "DECISIONS_AND_ASSUMPTIONS.md",
-    "PROJECT_STRUCTURE.md",
-    "REFERENCES.md",
-    "RESEARCH_AND_NAMING.md"
+    "docs/PRD.md",
+    "docs/TRD.md",
+    "docs/DESIGN_SYSTEM.md",
+    "docs/SECURITY_AND_ETHICS.md",
+    "docs/TEST_PLAN.md",
+    "docs/DECISIONS_AND_ASSUMPTIONS.md",
+    "docs/PROJECT_STRUCTURE.md",
+    "docs/REFERENCES.md",
+    "docs/RESEARCH_AND_NAMING.md"
 ]
 
 def test_tc_doc_01_banned_claims(project_root):
@@ -91,7 +91,7 @@ def test_tc_doc_02_hex_colors(project_root):
 
 def test_tc_doc_03_font_names(project_root):
     """TC-DOC-03: Confirm DM Sans and IBM Plex Mono are the active typography pairing in DESIGN_SYSTEM.md."""
-    ds = project_root / "DESIGN_SYSTEM.md"
+    ds = project_root / "docs" / "DESIGN_SYSTEM.md"
     content = ds.read_text(encoding="utf-8")
     assert "DM Sans" in content
     assert "IBM Plex Mono" in content

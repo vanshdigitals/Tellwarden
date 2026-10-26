@@ -1,0 +1,126 @@
+rules:
+  - id: AUTH-001
+    name: Authentication Brute Force
+    enabled: true
+    type: count_in_window
+    event_filter: auth_failure
+    group_by: src_ip
+    window_seconds: 300
+    threshold: 5
+    severity: High
+    attack_technique: T1110.001
+    explanation: Multiple authentication failures from a single IP within a short window suggest automated credential guessing.
+    false_positives: Users who forgot their password or automated sync services with outdated credentials.
+    response: Rate-limit or temporarily block the source IP at perimeter firewall or fail2ban jail.
+    bounds:
+      threshold: [2, 50]
+      window_seconds: [30, 3600]
+
+  - id: AUTH-002
+    name: Password Spraying
+    enabled: true
+    type: distinct_in_window
+    event_filter: auth_failure
+    group_by: src_ip
+    distinct_field: username
+    window_seconds: 600
+    threshold: 10
+    max_per_distinct: 2
+    severity: High
+    attack_technique: T1110.003
+    explanation: A single source attempting authentication against many accounts with few attempts per account to evade account lockouts.
+    false_positives: Corporate vulnerability scanner or centralized mail sync server.
+    response: Enforce multi-factor authentication across all targeted accounts and monitor subsequent authentications.
+    bounds:
+      threshold: [3, 100]
+      window_seconds: [60, 3600]
+      max_per_distinct: [1, 5]
+
+  - id: AUTH-003
+    name: Success After Multiple Failures
+    enabled: true
+    type: failures_then_success
+    event_filter_fail: auth_failure
+    event_filter_success: auth_success
+    group_by: [src_ip, username]
+    window_seconds: 600
+    threshold: 5
+    severity: Critical
+    attack_technique: T1110, T1078
+    explanation: A successful authentication preceded by multiple failures from the same source suggests a brute-force attack succeeded.
+    false_positives: Legitimate user who recalled their password after multiple failed attempts.
+    response: Promptly contact the account owner to confirm legitimate access and audit subsequent session activity.
+    bounds:
+      threshold: [2, 50]
+      window_seconds: [60, 3600]
+
+  - id: AUTH-004
+    name: Unusual Hour Login
+    enabled: true
+    type: time_of_day
+    event_filter: auth_success
+    group_by: username
+    start_hour: 7
+    end_hour: 20
+    timezone: UTC
+    severity: Low
+    attack_technique: T1078
+    explanation: Successful authentication outside normal business hours (07:00 to 20:00 UTC) can indicate credential misuse or unauthorized remote access.
+    false_positives: Employees working overtime, on-call engineers, or legitimate remote workers in different timezones.
+    response: Correlate with approved maintenance tickets or user work schedule.
+    bounds:
+      start_hour: [0, 23]
+      end_hour: [0, 23]
+
+  - id: NET-001
+    name: Vertical Port Reconnaissance
+    enabled: true
+    type: distinct_in_window
+    event_filter: conn
+    group_by: [src_ip, dst_ip]
+    distinct_field: dst_port
+    window_seconds: 60
+    threshold: 15
+    severity: Medium
+    attack_technique: T1046
+    explanation: A single source connecting to multiple distinct ports on a single host is typical of network service discovery scanning.
+    false_positives: Authorized network discovery or vulnerability scanning agents.
+    response: Inspect firewall logs for target ports and block reconnaissance probing from the source IP.
+    bounds:
+      threshold: [5, 200]
+      window_seconds: [10, 600]
+
+  - id: NET-002
+    name: Horizontal Subnet Reconnaissance
+    enabled: true
+    type: distinct_in_window
+    event_filter: conn
+    group_by: [src_ip, dst_port]
+    distinct_field: dst_ip
+    window_seconds: 60
+    threshold: 10
+    severity: Medium
+    attack_technique: T1046
+    explanation: A single source probing the same port across multiple hosts indicates internal lateral movement or network sweep scanning.
+    false_positives: Legitimate management server or monitoring system health check sweeps.
+    response: Isolate source host to check for malware compromise or unauthorized scanning tools.
+    bounds:
+      threshold: [3, 200]
+      window_seconds: [10, 600]
+
+  - id: WEB-001
+    name: High-Frequency Request Burst
+    enabled: true
+    type: count_in_window
+    event_filter: http_request
+    group_by: src_ip
+    window_seconds: 60
+    threshold: 100
+    severity: Medium
+    attack_technique: T1499
+    explanation: An abnormally high volume of HTTP requests from a single client indicates scraping, content fuzzing, or DoS attempts.
+    false_positives: Search engine web crawlers, CDN edge proxies, or heavily dynamic SPA clients.
+    response: Examine requested URI patterns and enforce rate limiting via reverse proxy or WAF.
+    bounds:
+      threshold: [20, 5000]
+      window_seconds: [10, 600]

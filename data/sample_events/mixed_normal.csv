@@ -1,0 +1,11 @@
+event_id,timestamp,event_type,src_ip,dst_ip,dst_port,protocol,username,service,status,user_agent,bytes,dataset
+mx-001,2026-10-25T08:00:01Z,auth_success,192.0.2.55,192.0.2.10,22,TCP,dev1,ssh,SUCCESS,,0,sample
+mx-002,2026-10-25T08:05:10Z,http_request,192.0.2.101,192.0.2.80,443,HTTPS,,web,200,"Mozilla/5.0",1420,sample
+mx-003,2026-10-25T08:05:12Z,http_request,192.0.2.101,192.0.2.80,443,HTTPS,,web,200,"Mozilla/5.0",45200,sample
+mx-004,2026-10-25T08:15:30Z,conn,192.0.2.55,192.0.2.10,443,TCP,,,OPEN,,0,sample
+mx-005,2026-10-25T08:20:00Z,auth_success,192.0.2.60,192.0.2.10,22,TCP,dev2,ssh,SUCCESS,,0,sample
+mx-006,2026-10-25T08:22:15Z,http_request,192.0.2.102,192.0.2.80,443,HTTPS,,web,200,"Mozilla/5.0",2300,sample
+mx-007,2026-10-25T09:00:00Z,auth_success,192.0.2.70,192.0.2.10,22,TCP,admin,ssh,SUCCESS,,0,sample
+mx-008,2026-10-25T09:15:22Z,http_request,192.0.2.103,192.0.2.80,443,HTTPS,,web,304,"Mozilla/5.0",0,sample
+mx-009,2026-10-25T09:30:45Z,conn,192.0.2.70,192.0.2.10,22,TCP,,,OPEN,,0,sample
+mx-010,2026-10-25T09:45:12Z,http_request,192.0.2.104,192.0.2.80,443,HTTPS,,web,200,"Mozilla/5.0",5600,sample

@@ -1,0 +1,491 @@
+/* ==========================================================================
+   Tellwarden Shell & Responsive Navigation Styles
+   Verified against Streamlit 1.66.1
+   Strictly implements DESIGN_SYSTEM.md with owner-approved overrides O-1 to O-6
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Streamlit-Internal Selectors (Verified against Streamlit 1.66.1)
+   -------------------------------------------------------------------------- */
+
+/* Hide native Streamlit left sidebar and collapse control */
+section[data-testid="stSidebar"],
+[data-testid="collapsedControl"] {
+    display: none !important;
+}
+
+/* Make native header non-blocking and transparent */
+header[data-testid="stHeader"] {
+    background-color: transparent !important;
+    pointer-events: none;
+    z-index: 990 !important;
+}
+
+/* Reposition native running indicator 76px from right so it never overlaps hamburger */
+header[data-testid="stHeader"] [data-testid="stStatusWidget"] {
+    pointer-events: auto;
+    position: fixed !important;
+    top: 10px !important;
+    right: 76px !important;
+    z-index: 1001 !important;
+}
+
+/* Main app container padding and smooth push transition */
+[data-testid="stAppViewContainer"] > .main {
+    padding-top: 64px !important;
+    transition: padding-right 240ms cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+@media (max-width: 767px) {
+    [data-testid="stAppViewContainer"] > .main {
+        padding-top: 56px !important;
+    }
+}
+
+@media (min-width: 1101px) {
+    [data-testid="stAppViewContainer"] > .main {
+        padding-right: var(--tw-drawer-w, 0px) !important;
+    }
+}
+
+/* Centered content block with max-width */
+[data-testid="stAppViewBlockContainer"] {
+    max-width: 1200px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+
+@media (min-width: 1600px) {
+    [data-testid="stAppViewBlockContainer"] {
+        max-width: 1320px !important;
+        padding-left: 32px !important;
+        padding-right: 32px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    [data-testid="stAppViewBlockContainer"] {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Skip to Content Link
+   -------------------------------------------------------------------------- */
+.tw-skip-link {
+    position: fixed;
+    top: -999px;
+    left: 16px;
+    background: #1B365D;
+    color: #FFFFFF;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: "DM Sans", system-ui, sans-serif;
+    border-radius: 10px;
+    text-decoration: none;
+    z-index: 2000;
+    outline: 2px solid #0F766E;
+    outline-offset: 2px;
+}
+
+.tw-skip-link:focus {
+    top: 8px;
+}
+
+.tw-shell-root {
+    display: contents;
+}
+
+/* --------------------------------------------------------------------------
+   Top Sticky Header
+   -------------------------------------------------------------------------- */
+.tw-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #CBD5E1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 995;
+    font-family: "DM Sans", system-ui, sans-serif;
+    transition: right 240ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (min-width: 1101px) {
+    .tw-header {
+        right: var(--tw-drawer-w, 0px);
+    }
+}
+
+@media (max-width: 767px) {
+    .tw-header {
+        height: 56px;
+        padding: 0 16px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .tw-header {
+        padding: 0 32px;
+    }
+}
+
+.tw-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.tw-compact-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #1B365D;
+}
+
+.tw-compact-brand.hidden-desktop {
+    display: none;
+}
+
+.tw-brand-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1B365D;
+    letter-spacing: -0.01em;
+}
+
+.tw-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #475569;
+    white-space: nowrap;
+}
+
+.tw-bc-group {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: #475569;
+}
+
+.tw-bc-sep {
+    color: #94A3B8;
+}
+
+.tw-bc-title {
+    font-weight: 500;
+    color: #1B365D;
+}
+
+@media (max-width: 767px) {
+    .tw-breadcrumb {
+        display: none;
+    }
+}
+
+/* Hamburger button */
+.tw-hamburger {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #CBD5E1;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #1B365D;
+    padding: 0;
+    transition: background-color 150ms ease, transform 100ms ease;
+}
+
+.tw-hamburger:hover {
+    background-color: #F1F5F9;
+}
+
+.tw-hamburger:active {
+    transform: translateY(1px);
+}
+
+.tw-hamburger:focus-visible {
+    outline: 2px solid #0F766E;
+    outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Backdrop Scrim (Overlay Mode)
+   -------------------------------------------------------------------------- */
+.tw-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+    z-index: 998;
+}
+
+.tw-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Right-side Drawer (Sidebar)
+   -------------------------------------------------------------------------- */
+.tw-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    width: min(320px, 88vw);
+    background-color: #1B365D;
+    color: #E2E8F0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 240ms cubic-bezier(0.2, 0, 0, 1);
+    font-family: "DM Sans", system-ui, sans-serif;
+    box-sizing: border-box;
+}
+
+.tw-drawer.open {
+    transform: translateX(0);
+}
+
+/* Drawer Header */
+.tw-drawer-header {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px 0 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+    .tw-drawer-header {
+        height: 56px;
+        padding: 0 16px 0 16px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .tw-drawer-header {
+        padding: 0 32px 0 24px;
+    }
+}
+
+.tw-drawer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tw-drawer-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.tw-drawer-sub {
+    font-size: 13px;
+    color: #A9B8CC;
+    line-height: 1.2;
+}
+
+/* Drawer Close Button */
+.tw-close-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid rgba(169, 184, 204, 0.4);
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #FFFFFF;
+    padding: 0;
+    transition: background-color 150ms ease, transform 100ms ease;
+}
+
+.tw-close-btn:hover {
+    background-color: #27466F;
+}
+
+.tw-close-btn:active {
+    transform: translateY(1px);
+}
+
+.tw-close-btn:focus-visible {
+    outline: 2px solid #FFFFFF;
+    outline-offset: 2px;
+}
+
+/* Scrollable Nav Area */
+.tw-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.tw-group {
+    margin-bottom: 20px;
+}
+
+.tw-group:last-child {
+    margin-bottom: 0;
+}
+
+.tw-group-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #A9B8CC;
+    margin: 0 0 8px 8px;
+}
+
+.tw-group:first-child .tw-group-label {
+    margin-top: 0;
+}
+
+.tw-group:not(:first-child) .tw-group-label {
+    margin-top: 24px;
+}
+
+.tw-group-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Menu Items */
+.tw-nav-item {
+    width: 100%;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: #E2E8F0;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: "DM Sans", system-ui, sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: left;
+    transition: background-color 150ms ease, color 150ms ease;
+}
+
+.tw-nav-item svg {
+    flex-shrink: 0;
+    stroke: currentColor;
+}
+
+.tw-nav-item:hover {
+    background-color: #27466F;
+    color: #FFFFFF;
+}
+
+.tw-nav-item:active {
+    background-color: #34578A;
+}
+
+.tw-nav-item:focus-visible {
+    outline: 2px solid #FFFFFF;
+    outline-offset: 2px;
+}
+
+/* Active Menu Item Pill */
+.tw-nav-item.active,
+.tw-nav-item[aria-current="page"] {
+    background-color: #FFFFFF !important;
+    color: #1B365D !important;
+    font-weight: 600 !important;
+}
+
+.tw-nav-item.active svg,
+.tw-nav-item[aria-current="page"] svg {
+    stroke: #1B365D !important;
+}
+
+/* --------------------------------------------------------------------------
+   Audit Guardrail (Pinned Footer)
+   -------------------------------------------------------------------------- */
+.tw-guardrail {
+    margin: 16px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background-color: rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
+}
+
+.tw-guardrail-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.tw-guardrail-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.tw-guardrail-body {
+    font-size: 14px;
+    line-height: 1.45;
+    color: #E2E8F0;
+    margin: 0;
+}
+
+/* Reduced height viewport adjustments */
+@media (max-height: 600px) {
+    .tw-guardrail-p2 {
+        display: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .tw-header,
+    .tw-drawer,
+    .tw-backdrop,
+    [data-testid="stAppViewContainer"] > .main {
+        transition: none !important;
+        animation: none !important;
+    }
+}

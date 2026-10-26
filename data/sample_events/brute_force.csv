@@ -1,0 +1,11 @@
+event_id,timestamp,event_type,src_ip,dst_ip,dst_port,protocol,username,service,status,user_agent,bytes,dataset
+evt-001,2026-10-25T21:10:00Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,root,ssh,FAILED,,0,sample
+evt-002,2026-10-25T21:10:12Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,root,ssh,FAILED,,0,sample
+evt-003,2026-10-25T21:10:25Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,root,ssh,FAILED,,0,sample
+evt-004,2026-10-25T21:10:38Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,root,ssh,FAILED,,0,sample
+evt-005,2026-10-25T21:10:50Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,root,ssh,FAILED,,0,sample
+evt-006,2026-10-25T21:11:02Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,root,ssh,FAILED,,0,sample
+evt-007,2026-10-25T21:11:15Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,admin,ssh,FAILED,,0,sample
+evt-008,2026-10-25T21:11:28Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,admin,ssh,FAILED,,0,sample
+evt-009,2026-10-25T21:11:40Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,admin,ssh,FAILED,,0,sample
+evt-010,2026-10-25T21:11:55Z,auth_failure,198.51.100.42,192.0.2.10,22,TCP,ubuntu,ssh,FAILED,,0,sample

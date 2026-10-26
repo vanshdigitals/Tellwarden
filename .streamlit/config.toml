@@ -1,0 +1,44 @@
+[theme]
+primaryColor = "#0F766E"
+backgroundColor = "#F8FAFC"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#1B365D"
+font = "DM Sans"
+headingFont = "DM Sans"
+codeFont = "IBM Plex Mono"
+baseRadius = "10px"
+buttonRadius = "10px"
+
+[[theme.fontFaces]]
+family = "DM Sans"
+url = "app/static/fonts/DMSans-Regular.woff2"
+weight = "400"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "DM Sans"
+url = "app/static/fonts/DMSans-Medium.woff2"
+weight = "500"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "DM Sans"
+url = "app/static/fonts/DMSans-SemiBold.woff2"
+weight = "600"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "IBM Plex Mono"
+url = "app/static/fonts/IBMPlexMono-Regular.woff2"
+weight = "400"
+style = "normal"
+
+[server]
+maxUploadSize = 5
+enableStaticServing = true
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false

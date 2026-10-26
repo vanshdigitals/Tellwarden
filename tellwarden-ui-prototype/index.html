@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tellwarden - Security Analysis Workspace</title>
+  <meta name="description" content="Tellwarden educational cybersecurity workspace featuring an automated web security hygiene scanner and an offline rule-based IDS simulator.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Dark Scrim for Mobile / Tablet Drawer -->
+  <div id="drawer-scrim" class="scrim" aria-hidden="true"></div>
+
+  <!-- Sidebar Navigation -->
+  <aside id="app-sidebar" class="sidebar" aria-label="Main Navigation">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <div class="brand-icon-box" aria-hidden="true">
+          <svg class="brand-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M12 8v4"/>
+            <path d="M12 16h.01"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Tellwarden</span>
+          <span class="brand-subtitle">Security analysis workspace</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <h2 class="nav-category">PLATFORM</h2>
+        <ul class="nav-list">
+          <li>
+            <a href="#overview" class="nav-item active" aria-current="page" data-view="overview">
+              <svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+              </svg>
+              <span>Platform Overview</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nav-group">
+        <h2 class="nav-category">MODULE A</h2>
+        <ul class="nav-list">
+          <li>
+            <a href="#web-scanner" class="nav-item" data-view="web-scanner">
+              <svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              <span>Web Security Scanner</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nav-group">
+        <h2 class="nav-category">MODULE B</h2>
+        <ul class="nav-list">
+          <li>
+            <a href="#ids-simulator" class="nav-item" data-view="ids-simulator">
+              <svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+              <span>Offline IDS Simulator</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nav-group">
+        <h2 class="nav-category">REFERENCE</h2>
+        <ul class="nav-list">
+          <li>
+            <a href="#rules-guide" class="nav-item" data-view="rules-guide">
+              <svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+              <span>Detection Rules Guide</span>
+            </a>
+          </li>
+          <li>
+            <a href="#about" class="nav-item" data-view="about">
+              <svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+              <span>About &amp; Limitations</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="notice-card">
+        <div class="notice-header">
+          <svg class="notice-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span class="notice-title">Sample data only</span>
+        </div>
+        <p class="notice-text">Offline analysis. Nothing is scanned or monitored.</p>
+      </div>
+
+      <button id="btn-reset-demo" class="btn-reset" type="button">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"/>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+        </svg>
+        <span>Reset Demo</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Shell Wrapper -->
+  <div class="app-shell">
+    <!-- Sticky Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <!-- Logo visible when sidebar is collapsed or on mobile -->
+        <div class="header-brand" id="header-brand">
+          <div class="brand-icon-box small" aria-hidden="true">
+            <svg class="brand-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <span class="brand-name header-title">Tellwarden</span>
+        </div>
+
+        <nav class="header-breadcrumb" aria-label="Breadcrumb">
+          <span class="breadcrumb-root" id="breadcrumb-root">Platform</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current" id="breadcrumb-current" aria-current="page">Overview</span>
+        </nav>
+      </div>
+
+      <div class="header-right">
+        <div class="status-pill-badge" title="Running in safe offline demonstration mode">
+          <span class="status-dot-teal" aria-hidden="true"></span>
+          <span>Sample data</span>
+        </div>
+
+        <button id="hamburger-btn" class="btn-hamburger" type="button" aria-label="Toggle navigation menu" aria-expanded="true" aria-controls="app-sidebar">
+          <svg class="hamburger-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-content">
+      <div class="content-container">
+
+        <!-- ================================================================
+             VIEW 1: PLATFORM OVERVIEW
+             ================================================================ -->
+        <div id="view-overview" class="view-panel active">
+          <!-- Page Header -->
+          <div class="page-header">
+            <div class="page-title-box">
+              <h1 class="page-title">Overview</h1>
+              <p class="page-subtitle">Security posture snapshot and cross-module sample telemetry across web hygiene and detection rules.</p>
+            </div>
+            <div class="page-actions">
+              <button id="btn-export-report" class="btn btn-primary" type="button">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Export Report</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Slim Navy Welcome Strip -->
+          <section class="welcome-strip" aria-label="Workspace Introduction">
+            <div class="welcome-content">
+              <h2 class="welcome-title">Welcome to Tellwarden</h2>
+              <p class="welcome-desc">An educational cybersecurity workspace for web configuration hygiene and offline intrusion detection simulation. Explore findings, inspect rule logic, and evaluate sample workloads.</p>
+            </div>
+            <div class="welcome-badge">
+              <span class="pill-outline">Educational prototype</span>
+            </div>
+          </section>
+
+          <!-- Metric Cards Grid -->
+          <section class="metrics-grid" aria-label="Key Platform Metrics">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Sample checks</span>
+                <div class="metric-icon-tile navy">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <polyline points="9 12 11 14 15 10"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value">17</div>
+              <div class="metric-hint">12 Pass &middot; 3 Warning &middot; 2 Fail</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Events analysed</span>
+                <div class="metric-icon-tile slate">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value">1,200</div>
+              <div class="metric-hint">Across 4 synthetic scenarios</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">IDS findings</span>
+                <div class="metric-icon-tile amber">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value">5</div>
+              <div class="metric-hint">1 Critical &middot; 2 High &middot; 2 Med</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Example rules</span>
+                <div class="metric-icon-tile teal">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="21" x2="4" y2="14"/>
+                    <line x1="4" y1="10" x2="4" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12" y2="3"/>
+                    <line x1="20" y1="21" x2="20" y2="16"/>
+                    <line x1="20" y1="12" x2="20" y2="3"/>
+                    <line x1="1" y1="14" x2="7" y2="14"/>
+                    <line x1="9" y1="8" x2="15" y2="8"/>
+                    <line x1="17" y1="16" x2="23" y2="16"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value">7</div>
+              <div class="metric-hint">MITRE ATT&amp;CK mapped</div>
+            </div>
+          </section>
+
+          <!-- Tool Cards Section -->
+          <section class="tools-grid" aria-label="Platform Core Modules">
+            <!-- Web Security Scanner Card -->
+            <div class="tool-card">
+              <div class="tool-card-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon-box navy">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="2" y1="12" x2="22" y2="12"/>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                  </div>
+                  <div class="tool-title-group">
+                    <div class="tool-badge-row">
+                      <span class="badge-module">MODULE A</span>
+                    </div>
+                    <h3 class="tool-title">Web Security Scanner</h3>
+                  </div>
+                </div>
+                <p class="tool-desc">Inspects HTTPS certificate status, 11 essential security headers, and basic CORS configuration hygiene on target hosts with SSRF safeguards.</p>
+                <div class="tool-meta-panel">
+                  <span class="meta-label">Sample target:</span>
+                  <code class="meta-code">https://example.test</code>
+                </div>
+              </div>
+              <div class="tool-card-footer">
+                <button class="btn btn-primary" type="button" data-action="goto-scanner">
+                  <span>Start Scan</span>
+                </button>
+                <button class="btn btn-secondary" type="button" data-action="filter-scanner">
+                  <span>See sample results</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Offline IDS Simulator Card -->
+            <div class="tool-card">
+              <div class="tool-card-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon-box teal">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                  </div>
+                  <div class="tool-title-group">
+                    <div class="tool-badge-row">
+                      <span class="badge-module">MODULE B</span>
+                    </div>
+                    <h3 class="tool-title">Offline IDS Simulator</h3>
+                  </div>
+                </div>
+                <p class="tool-desc">Evaluates sliding-window detection rules against event logs to identify brute force, port scans, and anomalous traffic patterns without network probes.</p>
+                <div class="tool-meta-panel">
+                  <span class="meta-label">Active dataset:</span>
+                  <code class="meta-code">mixed_normal.csv (1,200 events)</code>
+                </div>
+              </div>
+              <div class="tool-card-footer">
+                <button class="btn btn-primary" type="button" data-action="goto-ids">
+                  <span>Run Analysis</span>
+                </button>
+                <button class="btn btn-secondary" type="button" data-action="goto-rules">
+                  <span>View rules</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Lower Section: Findings Table & Breakdown Side-by-Side -->
+          <div class="overview-split-layout">
+            <!-- Recent Sample Findings Table -->
+            <section class="card findings-card" aria-label="Recent Sample Findings">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Recent sample findings</h3>
+                  <p class="card-subtitle">Simulated detections and web configuration hygiene checks.</p>
+                </div>
+              </div>
+
+              <!-- Table Controls Toolbar -->
+              <div class="table-toolbar">
+                <div class="filter-chips-wrapper" role="tablist" aria-label="Filter findings by module">
+                  <button class="chip active" role="tab" aria-selected="true" data-filter="all">All (7)</button>
+                  <button class="chip" role="tab" aria-selected="false" data-filter="web">Web Scanner (4)</button>
+                  <button class="chip" role="tab" aria-selected="false" data-filter="ids">IDS Simulator (3)</button>
+                </div>
+
+                <div class="search-box-wrapper">
+                  <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                  <input id="findings-search" type="search" class="search-input" placeholder="Search findings, IPs, rules..." aria-label="Search sample findings">
+                </div>
+              </div>
+
+              <!-- Table Container -->
+              <div class="table-responsive">
+                <table class="findings-table" id="findings-table">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="th-finding">Finding</th>
+                      <th scope="col" class="th-status">Status</th>
+                      <th scope="col" class="th-severity">Severity</th>
+                      <th scope="col" class="th-time">Time (UTC)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="findings-table-body">
+                    <!-- Populated dynamically by JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Empty State for Search / Filter -->
+              <div id="table-empty-state" class="table-empty" style="display: none;">
+                <div class="empty-icon-box">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                </div>
+                <h4 class="empty-title">No findings match your criteria</h4>
+                <p class="empty-desc">Try clearing the search query or changing your module filter selection.</p>
+                <button id="btn-clear-filters" class="btn btn-secondary small" type="button">Clear Filters</button>
+              </div>
+            </section>
+
+            <!-- Sample Breakdown Card -->
+            <section class="card breakdown-card" aria-label="Sample Telemetry Breakdown">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Sample breakdown</h3>
+                  <p class="card-subtitle">Distribution of simulated checks and findings.</p>
+                </div>
+              </div>
+
+              <div class="breakdown-body">
+                <!-- Scanner Checks Stacked Bar -->
+                <div class="chart-group">
+                  <div class="chart-label-row">
+                    <span class="chart-group-title">Scanner Checks</span>
+                    <span class="chart-group-total">17 total</span>
+                  </div>
+                  <div class="stacked-bar" role="img" aria-label="Scanner checks distribution: 12 pass, 3 warning, 2 fail">
+                    <div class="bar-segment pass" style="width: 70.6%;" title="12 Pass (70.6%)"></div>
+                    <div class="bar-segment warning" style="width: 17.6%;" title="3 Warning (17.6%)"></div>
+                    <div class="bar-segment fail" style="width: 11.8%;" title="2 Fail (11.8%)"></div>
+                  </div>
+                  <div class="chart-legend">
+                    <div class="legend-item">
+                      <span class="legend-indicator pass" aria-hidden="true"></span>
+                      <span class="legend-label">12 Pass</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-indicator warning" aria-hidden="true"></span>
+                      <span class="legend-label">3 Warning</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-indicator fail" aria-hidden="true"></span>
+                      <span class="legend-label">2 Fail</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- IDS Findings Stacked Bar -->
+                <div class="chart-group">
+                  <div class="chart-label-row">
+                    <span class="chart-group-title">IDS Findings</span>
+                    <span class="chart-group-total">5 total</span>
+                  </div>
+                  <div class="stacked-bar" role="img" aria-label="IDS findings distribution: 1 critical, 2 high, 2 medium">
+                    <div class="bar-segment critical" style="width: 20%;" title="1 Critical (20%)"></div>
+                    <div class="bar-segment high" style="width: 40%;" title="2 High (40%)"></div>
+                    <div class="bar-segment medium" style="width: 40%;" title="2 Medium (40%)"></div>
+                  </div>
+                  <div class="chart-legend">
+                    <div class="legend-item">
+                      <span class="legend-indicator critical" aria-hidden="true"></span>
+                      <span class="legend-label">1 Critical</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-indicator high" aria-hidden="true"></span>
+                      <span class="legend-label">2 High</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-indicator medium" aria-hidden="true"></span>
+                      <span class="legend-label">2 Medium</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Explicit Disclaimer Notice -->
+                <div class="breakdown-notice">
+                  <div class="notice-icon-circle" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="12" y1="16" x2="12" y2="12"/>
+                      <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                  </div>
+                  <p class="breakdown-notice-text">
+                    <strong>Not a security score.</strong> Educational configuration hygiene and sample rule evaluation. A passing check does not prove a site is secure.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             VIEW 2: WEB SECURITY SCANNER (MODULE A)
+             ================================================================ -->
+        <div id="view-web-scanner" class="view-panel" style="display: none;">
+          <div class="page-header">
+            <div class="page-title-box">
+              <div class="view-pill-tag">MODULE A</div>
+              <h1 class="page-title">Web Security Scanner</h1>
+              <p class="page-subtitle">Inspect HTTPS certificate status, 11 essential security headers, and basic CORS configuration hygiene.</p>
+            </div>
+            <div class="page-actions">
+              <button id="btn-export-scanner-report" class="btn btn-secondary" type="button">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Export Scan Report</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mandatory Scope & Limitations Banner (SEC-09, SEC-14, UI-04) -->
+          <div class="scope-banner" role="region" aria-label="Scope and responsible use policy">
+            <div class="banner-icon-col">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+            </div>
+            <div class="banner-text-col">
+              <strong>Scan only sites you own or have permission to test.</strong> This educational tool evaluates a small set of configuration settings. A good result does not mean a site is secure. No crawling, password testing, or vulnerability exploitation is performed.
+            </div>
+          </div>
+
+          <!-- Target Input & Authorization Form Card -->
+          <div class="card scan-config-card">
+            <div class="card-header">
+              <h3 class="card-title">Target Configuration &amp; Safety Guard</h3>
+            </div>
+            <div class="scan-config-body">
+              <div class="form-group">
+                <label for="scanner-url-input" class="form-label">Target Website URL</label>
+                <div class="url-input-wrapper">
+                  <input type="url" id="scanner-url-input" class="form-input" value="https://example.test" placeholder="https://example.test" autocomplete="off" spellcheck="false">
+                  <button id="btn-quick-target" class="btn btn-secondary small" type="button">Load Safe Sample</button>
+                </div>
+                <span class="form-hint">Only port 80 and 443 are accepted. Target host will be resolved and checked against the Network Guard blocklist.</span>
+              </div>
+
+              <!-- Mandatory Ethical Authorisation Checkbox (SEC-09) -->
+              <div class="consent-box">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="scanner-consent-checkbox" class="custom-checkbox" checked>
+                  <span class="checkbox-text">
+                    I own this website or I have written permission to test it. I understand that Tellwarden checks only selected configuration settings and does not prove a site is secure.
+                  </span>
+                </label>
+              </div>
+
+              <!-- Action Bar & State Switcher -->
+              <div class="scan-action-bar">
+                <div class="scan-action-left">
+                  <button id="btn-run-scan" class="btn btn-primary" type="button">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <span>Scan Target</span>
+                  </button>
+                  <span id="scan-cooldown-text" class="scan-cooldown-hint">Cooldown: Ready (10s between scans)</span>
+                </div>
+
+                <!-- Simulation State Switcher for Prototype Evaluation -->
+                <div class="simulation-state-bar">
+                  <span class="sim-label">Demo States:</span>
+                  <div class="sim-pill-group">
+                    <button class="sim-pill active" data-scanner-state="success">Success</button>
+                    <button class="sim-pill" data-scanner-state="empty">Empty</button>
+                    <button class="sim-pill" data-scanner-state="loading">Scanning</button>
+                    <button class="sim-pill" data-scanner-state="refused">Refused (SSRF)</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scanner State: Loading / In-Progress -->
+          <div id="scanner-loading-state" class="card state-panel-card" style="display: none;">
+            <div class="state-loading-content">
+              <div class="spinner-ring" aria-hidden="true"></div>
+              <h4 class="state-title">Scanning Target: <span class="mono-target">https://example.test</span></h4>
+              <p class="state-desc">Running guarded inspection pipeline (deadline: 20s, max 10 requests)...</p>
+              <div class="stepper-list">
+                <div class="stepper-step completed">
+                  <span class="step-icon">&check;</span>
+                  <span>URL Normalization &amp; Syntax Verification (SEC-01, SEC-02)</span>
+                </div>
+                <div class="stepper-step completed">
+                  <span class="step-icon">&check;</span>
+                  <span>DNS Resolution &amp; Network Guard IP Classification (SEC-03, SEC-04)</span>
+                </div>
+                <div class="stepper-step active">
+                  <span class="step-icon">&bull;</span>
+                  <span>TLS Certificate &amp; HTTPS Validation (HTTPS-01 to HTTPS-04)</span>
+                </div>
+                <div class="stepper-step">
+                  <span class="step-icon">&bull;</span>
+                  <span>Security Header Inspection (HDR-01 to HDR-11)</span>
+                </div>
+                <div class="stepper-step">
+                  <span class="step-icon">&bull;</span>
+                  <span>Safe CORS Policy Probing (CORS-01 to CORS-07)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scanner State: Refused / Blocked Target (SSRF Prevention Example) -->
+          <div id="scanner-refused-state" class="card state-panel-card border-error" style="display: none;">
+            <div class="refused-header">
+              <div class="badge-status fail">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>REFUSED</span>
+              </div>
+              <h4 class="refused-title">Target is not a public address, scan refused</h4>
+            </div>
+            <div class="refused-body">
+              <p class="refused-desc">
+                The Network Guard resolved the host to <code class="mono-ip">192.168.1.1</code> (RFC 1918 Private IPv4 Address). To protect internal and cloud infrastructure against Server-Side Request Forgery (SSRF), requests to non-public, loopback, private, carrier-grade NAT, or metadata addresses are strictly refused (SEC-03, SEC-04, TC-NET-02).
+              </p>
+              <div class="refused-meta-box">
+                <div><strong>Target host:</strong> <code>internal-router.test</code></div>
+                <div><strong>Resolved address:</strong> <code>192.168.1.1</code></div>
+                <div><strong>Classification:</strong> <code>IPv4 Private Network (192.168.0.0/16)</code></div>
+                <div><strong>Enforcement:</strong> Immutable blocklist policy (SEC-14)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scanner State: Empty State -->
+          <div id="scanner-empty-state" class="card state-panel-card" style="display: none;">
+            <div class="empty-scanner-box">
+              <div class="empty-icon-box">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <h4 class="empty-title">Ready for target hygiene scan</h4>
+              <p class="empty-desc">Enter an authorized target URL above, confirm the authorization statement, and click <strong>Scan Target</strong> to perform safe checks.</p>
+            </div>
+          </div>
+
+          <!-- Scanner State: Results (Success State) -->
+          <div id="scanner-results-state">
+            <!-- Scan Metadata Bar -->
+            <div class="card scan-summary-bar">
+              <div class="summary-metric-item">
+                <span class="summary-item-label">Target URL</span>
+                <code class="summary-item-code">https://example.test</code>
+              </div>
+              <div class="summary-metric-item">
+                <span class="summary-item-label">Final Destination</span>
+                <code class="summary-item-code">https://example.test/</code>
+              </div>
+              <div class="summary-metric-item">
+                <span class="summary-item-label">Resolved IP</span>
+                <code class="summary-item-code">198.51.100.25 (Public)</code>
+              </div>
+              <div class="summary-metric-item">
+                <span class="summary-item-label">TLS Status</span>
+                <span class="summary-item-val text-success">Verified (TLS 1.3)</span>
+              </div>
+              <div class="summary-metric-item">
+                <span class="summary-item-label">Request Budget</span>
+                <span class="summary-item-val">4 of 10 used</span>
+              </div>
+            </div>
+
+            <!-- Summary Counts Row (No Grades / Scores - SCN-10) -->
+            <div class="scan-counts-row">
+              <div class="count-card pass">
+                <div class="count-number">12</div>
+                <div class="count-label">PASS</div>
+              </div>
+              <div class="count-card warning">
+                <div class="count-number">3</div>
+                <div class="count-label">WARNING</div>
+              </div>
+              <div class="count-card fail">
+                <div class="count-number">2</div>
+                <div class="count-label">FAIL</div>
+              </div>
+              <div class="count-card info">
+                <div class="count-number">0</div>
+                <div class="count-label">INFO</div>
+              </div>
+            </div>
+
+            <!-- Checks Category Navigation Tabs -->
+            <div class="card checks-catalog-card">
+              <div class="card-header toolbar-header">
+                <div class="checks-tabs-list" role="tablist">
+                  <button class="chip active" data-check-filter="all">All Checks (17)</button>
+                  <button class="chip" data-check-filter="https">HTTPS (4)</button>
+                  <button class="chip" data-check-filter="headers">Security Headers (11)</button>
+                  <button class="chip" data-check-filter="cors">CORS (2)</button>
+                </div>
+              </div>
+
+              <div class="checks-list-container" id="scanner-checks-list">
+                <!-- Dynamically populated or rendered list of check items -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             VIEW 3: OFFLINE IDS SIMULATOR (MODULE B)
+             ================================================================ -->
+        <div id="view-ids-simulator" class="view-panel" style="display: none;">
+          <div class="page-header">
+            <div class="page-title-box">
+              <div class="view-pill-tag">MODULE B</div>
+              <h1 class="page-title">Offline IDS Simulator</h1>
+              <p class="page-subtitle">Evaluate deterministic sliding-window detection rules against event logs without network probes.</p>
+            </div>
+            <div class="page-actions">
+              <button id="btn-export-ids-csv" class="btn btn-secondary" type="button">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Export Findings (CSV)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mandatory Honesty Banner (IDS-09, UI-04) -->
+          <div class="scope-banner" role="region" aria-label="IDS simulator scope notice">
+            <div class="banner-icon-col">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <div class="banner-text-col">
+              <strong>Offline simulation of sample data.</strong> This is not live network monitoring and does not process real-time packet traffic. Rules evaluate synthetic or uploaded logs using deterministic sliding-window logic.
+            </div>
+          </div>
+
+          <!-- Dataset Selection & Form Card -->
+          <div class="card ids-input-card">
+            <div class="card-header">
+              <h3 class="card-title">Event Log Ingestion &amp; Simulation Parameters</h3>
+            </div>
+            <div class="ids-input-body">
+              <!-- Preset Scenarios -->
+              <div class="form-group">
+                <label class="form-label">Select Bundled Sample Dataset</label>
+                <div class="dataset-presets-grid">
+                  <label class="preset-card active">
+                    <input type="radio" name="dataset-preset" value="mixed_normal" checked>
+                    <div class="preset-info">
+                      <span class="preset-name">mixed_normal.csv</span>
+                      <span class="preset-meta">1,200 events &middot; Baseline normal traffic &amp; sporadic anomalies</span>
+                    </div>
+                  </label>
+                  <label class="preset-card">
+                    <input type="radio" name="dataset-preset" value="brute_force">
+                    <div class="preset-info">
+                      <span class="preset-name">brute_force.csv</span>
+                      <span class="preset-meta">180 events &middot; High-rate SSH login failure burst</span>
+                    </div>
+                  </label>
+                  <label class="preset-card">
+                    <input type="radio" name="dataset-preset" value="password_spraying">
+                    <div class="preset-info">
+                      <span class="preset-name">password_spraying.csv</span>
+                      <span class="preset-meta">240 events &middot; Low-and-slow authentication across 15 accounts</span>
+                    </div>
+                  </label>
+                  <label class="preset-card">
+                    <input type="radio" name="dataset-preset" value="port_scan">
+                    <div class="preset-info">
+                      <span class="preset-name">port_scan.csv</span>
+                      <span class="preset-meta">320 events &middot; Vertical reconnaissance probing 24 ports</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Collapsible Parameter Tuning (IDS-05) -->
+              <details class="rule-tuning-details">
+                <summary class="tuning-summary">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="21" x2="4" y2="14"/>
+                    <line x1="4" y1="10" x2="4" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12" y2="3"/>
+                    <line x1="20" y1="21" x2="20" y2="16"/>
+                    <line x1="20" y1="12" x2="20" y2="3"/>
+                    <line x1="1" y1="14" x2="7" y2="14"/>
+                    <line x1="9" y1="8" x2="15" y2="8"/>
+                    <line x1="17" y1="16" x2="23" y2="16"/>
+                  </svg>
+                  <span>Tune Detection Rule Thresholds &amp; Windows (Bounded)</span>
+                </summary>
+                <div class="tuning-sliders-grid">
+                  <div class="slider-control">
+                    <div class="slider-label-row">
+                      <span>AUTH-001 Brute Force Threshold</span>
+                      <strong id="val-auth-001">5 failures / 300s</strong>
+                    </div>
+                    <input type="range" min="2" max="50" value="5" class="range-slider" id="slider-auth-001">
+                    <span class="slider-bound">Bounds: 2 to 50 failures</span>
+                  </div>
+                  <div class="slider-control">
+                    <div class="slider-label-row">
+                      <span>AUTH-002 Spraying Threshold</span>
+                      <strong id="val-auth-002">10 accounts / 600s</strong>
+                    </div>
+                    <input type="range" min="3" max="100" value="10" class="range-slider" id="slider-auth-002">
+                    <span class="slider-bound">Bounds: 3 to 100 accounts</span>
+                  </div>
+                  <div class="slider-control">
+                    <div class="slider-label-row">
+                      <span>NET-001 Port Scan Threshold</span>
+                      <strong id="val-net-001">15 ports / 60s</strong>
+                    </div>
+                    <input type="range" min="5" max="200" value="15" class="range-slider" id="slider-net-001">
+                    <span class="slider-bound">Bounds: 5 to 200 ports</span>
+                  </div>
+                  <div class="slider-control">
+                    <div class="slider-label-row">
+                      <span>WEB-001 Request Burst Threshold</span>
+                      <strong id="val-web-001">100 reqs / 60s</strong>
+                    </div>
+                    <input type="range" min="20" max="1000" value="100" class="range-slider" id="slider-web-001">
+                    <span class="slider-bound">Bounds: 20 to 1000 requests</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Execution Controls -->
+              <div class="ids-action-bar">
+                <button id="btn-run-ids" class="btn btn-primary" type="button">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                  </svg>
+                  <span>Run Analysis</span>
+                </button>
+                <span class="ids-run-hint">Deterministic evaluation: 1,200 events processed in ~0.24s</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IDS Findings Output -->
+          <div class="card ids-findings-card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Simulation Findings</h3>
+                <p class="card-subtitle">Correlated incidents with exact evidence event trails.</p>
+              </div>
+              <div class="findings-severity-summary">
+                <span class="badge-severity critical">1 Critical</span>
+                <span class="badge-severity high">2 High</span>
+                <span class="badge-severity medium">2 Medium</span>
+                <span class="badge-severity low">0 Low</span>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="findings-table" id="ids-findings-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Rule &amp; Incident</th>
+                    <th scope="col">Severity</th>
+                    <th scope="col">ATT&amp;CK Technique</th>
+                    <th scope="col">Entity</th>
+                    <th scope="col">Evidence Events</th>
+                    <th scope="col">Detection Window</th>
+                  </tr>
+                </thead>
+                <tbody id="ids-findings-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             VIEW 4: DETECTION RULES GUIDE (REFERENCE)
+             ================================================================ -->
+        <div id="view-rules-guide" class="view-panel" style="display: none;">
+          <div class="page-header">
+            <div class="page-title-box">
+              <div class="view-pill-tag">REFERENCE</div>
+              <h1 class="page-title">Detection Rules Guide</h1>
+              <p class="page-subtitle">Documented specifications for the seven built-in sliding-window detection rules.</p>
+            </div>
+          </div>
+
+          <div class="rules-catalog-grid" id="rules-catalog-container">
+            <!-- Dynamically populated from rule catalog in JS -->
+          </div>
+        </div>
+
+        <!-- ================================================================
+             VIEW 5: ABOUT & LIMITATIONS (REFERENCE)
+             ================================================================ -->
+        <div id="view-about" class="view-panel" style="display: none;">
+          <div class="page-header">
+            <div class="page-title-box">
+              <div class="view-pill-tag">REFERENCE</div>
+              <h1 class="page-title">About &amp; Limitations</h1>
+              <p class="page-subtitle">Educational purpose, safety design, responsible disclosure, and technical limits.</p>
+            </div>
+          </div>
+
+          <div class="about-sections-grid">
+            <!-- Educational Mission -->
+            <section class="card about-card">
+              <div class="card-header">
+                <h3 class="card-title">1. Educational Charter &amp; Honesty</h3>
+              </div>
+              <div class="about-body">
+                <p>Tellwarden is an educational prototype designed to teach web configuration hygiene and intrusion detection rule mechanics in one place. It is <strong>not</strong> production security software and does not replace tools such as OWASP ZAP, Mozilla Observatory, or Wazuh.</p>
+                <div class="limits-callout">
+                  <ul>
+                    <li><strong>No Artificial Intelligence or Machine Learning:</strong> All detection is fixed, readable rule logic stored as data.</li>
+                    <li><strong>No Live Network Sniffing:</strong> Module B is strictly an offline simulation over event files.</li>
+                    <li><strong>No Security Guarantees:</strong> Passing a configuration check does not prove a site is secure.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- SSRF Defense Design -->
+            <section class="card about-card">
+              <div class="card-header">
+                <h3 class="card-title">2. SSRF Defense Architecture (SEC-01 to SEC-08)</h3>
+              </div>
+              <div class="about-body">
+                <p>To safely handle untrusted target URLs, the scanner enforces defense-in-depth before any socket is opened:</p>
+                <div class="table-responsive">
+                  <table class="simple-table">
+                    <thead>
+                      <tr><th>Address Range</th><th>Category</th><th>Enforcement</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td><code>127.0.0.0/8, ::1</code></td><td>Loopback</td><td>Blocked</td></tr>
+                      <tr><td><code>10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16</code></td><td>RFC 1918 Private</td><td>Blocked</td></tr>
+                      <tr><td><code>169.254.0.0/16, fe80::/10, fd00:ec2::254</code></td><td>Link-Local &amp; Cloud Metadata</td><td>Blocked</td></tr>
+                      <tr><td><code>100.64.0.0/10</code></td><td>Carrier-Grade NAT</td><td>Blocked</td></tr>
+                      <tr><td><code>::ffff:0:0/96</code></td><td>IPv4-Mapped IPv6</td><td>Unwrapped &amp; re-checked</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="subtext-note"><strong>Known limitation (DNS Rebinding):</strong> In this local MVP, the hostname is resolved and verified, and httpx connects shortly after. While the risk on a single-user laptop is limited to the user's own machine, a pinned-IP transport is required before any public multi-user hosting.</p>
+              </div>
+            </section>
+
+            <!-- Design System & Accessibility -->
+            <section class="card about-card">
+              <div class="card-header">
+                <h3 class="card-title">3. Design System &amp; Accessibility (WCAG AA)</h3>
+              </div>
+              <div class="about-body">
+                <p>Tellwarden adheres strictly to <a href="../DESIGN_SYSTEM.md" class="text-link">DESIGN_SYSTEM.md</a> with four core brand colors and verified contrast ratios:</p>
+                <div class="swatches-grid">
+                  <div class="swatch-item">
+                    <div class="swatch-color" style="background-color: #1B365D;"></div>
+                    <span class="swatch-name">Rampart Navy</span>
+                    <span class="swatch-hex">#1B365D (12.12:1)</span>
+                  </div>
+                  <div class="swatch-item">
+                    <div class="swatch-color" style="background-color: #475569;"></div>
+                    <span class="swatch-name">Slate</span>
+                    <span class="swatch-hex">#475569 (7.58:1)</span>
+                  </div>
+                  <div class="swatch-item">
+                    <div class="swatch-color" style="background-color: #0F766E;"></div>
+                    <span class="swatch-name">Signal Teal</span>
+                    <span class="swatch-hex">#0F766E (5.47:1)</span>
+                  </div>
+                  <div class="swatch-item">
+                    <div class="swatch-color" style="background-color: #F8FAFC; border: 1px solid #CBD5E1;"></div>
+                    <span class="swatch-name">Paper</span>
+                    <span class="swatch-hex">#F8FAFC (Surface)</span>
+                  </div>
+                </div>
+                <p class="subtext-note">Status indicators never rely on color alone: every status pairs an icon, a text label, and a color token.</p>
+              </div>
+            </section>
+
+            <!-- License & Attribution -->
+            <section class="card about-card">
+              <div class="card-header">
+                <h3 class="card-title">4. Open Source License &amp; Attribution</h3>
+              </div>
+              <div class="about-body">
+                <p>Tellwarden is open-source educational software distributed under the <strong>MIT License</strong>.</p>
+                <p>Fonts: <em>IBM Plex Sans</em> and <em>IBM Plex Mono</em> are licensed under the SIL Open Font License 1.1 and self-hosted locally without external CDN requests.</p>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Single Line Footer -->
+        <footer class="app-footer">
+          <p class="footer-text">Educational prototype &middot; Sample data only &middot; Not a live scanner or real-time network monitor.</p>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Detail Dialog Modal for Findings -->
+  <dialog id="finding-dialog" class="finding-modal" aria-labelledby="modal-title">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span id="modal-category" class="badge-module">MODULE</span>
+          <h3 id="modal-title" class="modal-title">Finding Detail</h3>
+        </div>
+        <button id="modal-close-btn" class="modal-close-btn" type="button" aria-label="Close details dialog">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-summary-row">
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Status</span>
+            <div id="modal-status-badge"></div>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Severity</span>
+            <div id="modal-severity-badge"></div>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Timestamp (UTC)</span>
+            <code id="modal-time" class="modal-code">--</code>
+          </div>
+          <div class="modal-meta-item">
+            <span class="modal-meta-label">Target / Entity</span>
+            <code id="modal-entity" class="modal-code">--</code>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4 class="modal-section-title">What was observed</h4>
+          <div class="modal-observation-box">
+            <code id="modal-observation" class="observation-code">--</code>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4 class="modal-section-title">Why it matters</h4>
+          <p id="modal-explanation" class="modal-text">--</p>
+        </div>
+
+        <div class="modal-section">
+          <h4 class="modal-section-title">Recommended response / remediation</h4>
+          <div class="modal-remediation-box">
+            <p id="modal-remediation" class="modal-text">--</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modal-dismiss-btn" class="btn btn-secondary" type="button">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Notification Toast Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Vanilla Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>

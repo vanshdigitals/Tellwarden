@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@font-face { font-family: "DM Sans"; src: url("/fonts/DMSans-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "DM Sans"; src: url("/fonts/DMSans-Medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "DM Sans"; src: url("/fonts/DMSans-SemiBold.woff2") format("woff2"); font-weight: 600 700; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/fonts/IBMPlexMono-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+
+/* Tokens from DESIGN_SYSTEM.md */
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-navy: #1b365d;
+  --color-navy-dark: #132744;
+  --color-teal: #0f766e;
+  --color-slate-ink: #475569;
+  --color-paper: #f8fafc;
+  --color-pass: #166534;
+  --color-warn: #b45309;
+  --color-fail: #b91c1c;
+  --color-line: #cbd5e1;
+  --color-nav-text: #e2e8f0;
+  --color-nav-label: #a9b8cc;
+  --color-nav-hover: #27466f;
+  /* Restrained depth (owner request 26 Oct 2026): hairline plus soft ambient shadow, no glow. */
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12);
+}
+
+@layer base {
+  html { background: var(--color-paper); color: var(--color-navy); }
+  body { font-family: var(--font-sans); font-size: 16px; line-height: 1.5; }
+  :focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
+}

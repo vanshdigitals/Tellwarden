@@ -29,6 +29,7 @@ MANIFEST
 # Virtual environments
 .venv/
 submission/.nbvenv/
+submission/outputs/
 venv/
 ENV/
 env/

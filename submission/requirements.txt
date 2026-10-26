@@ -1,0 +1,6 @@
+# Tellwarden, Python 3.11 or newer
+pandas>=2.0
+matplotlib>=3.7
+requests>=2.31
+notebook>=7.0
+ipykernel>=6.25
